@@ -4,7 +4,6 @@ import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { QuoteAdapter } from 'src/app/adapters/quote.adapter';
 import { Quote } from 'src/app/interfaces/Quote';
-import { QUOTES } from 'src/app/quotes.mock';
 import { QuoteResponse } from '../interfaces/QuoteResponse.dto';
 
 const LOCAL_STORAGE_URL_KEY = 'stock-market-api:urls';
