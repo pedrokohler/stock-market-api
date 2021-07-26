@@ -8,12 +8,14 @@ import { QuoteService } from 'src/app/services/quote.service';
   styleUrls: ['./quotes.component.css']
 })
 export class QuotesComponent implements OnInit {
+  urls: string[] = [];
   quotes: Quote[] = [];
 
   constructor(private quoteService: QuoteService) { }
 
   ngOnInit(): void {
-    this.quoteService.getQuotes().subscribe(quotes => this.quotes = quotes);
+    this.urls = this.quoteService.getLocalStorageUrls();
+    this.quoteService.initializeQuotes(this.urls).subscribe(quotes => this.quotes = quotes);
   }
 
 }
