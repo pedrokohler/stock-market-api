@@ -1,7 +1,7 @@
 <div *ngIf="quote">
   <h3>
     {{quote.symbol}}
-    <fa-icon [ngStyle]="{'color': 'red'}" [icon]="faTimes"></fa-icon>
+    <fa-icon (click)="onDelete(quote)" [ngStyle]="{'color': 'red'}" [icon]="faTimes"></fa-icon>
   </h3>
   <p>{{quote.currentPrice}}</p>
 </div>

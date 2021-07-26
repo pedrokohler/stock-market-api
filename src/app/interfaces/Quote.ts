@@ -1,4 +1,5 @@
 export interface Quote {
+  url: string;
   symbol: string;
   openPrice: number;
   highPrice: number;
@@ -6,4 +7,5 @@ export interface Quote {
   currentPrice: number;
   previousClosePrice: number;
   pollingTimestamp: number;
+  parseSymbol: (url: string) => string;
 }

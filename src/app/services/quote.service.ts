@@ -15,21 +15,22 @@ export class QuoteService {
   constructor(private http: HttpClient) { }
 
   initializeQuotes(urls: string[]): Observable<Quote[]> {
-    const symbols = urls.map(this.parseSymbol);
     const requests = urls
-      .map((url, i) => this.http
+      .map((url) => this.http
         .get<QuoteResponse>(url)
-        .pipe(map((response) => new QuoteAdapter(symbols[i], response)))
+        .pipe(map((response) => new QuoteAdapter(url, response)))
       );
     return forkJoin(requests);
+  }
+
+  deleteQuote(quotes: Quote[], quoteToDelete: Quote): Quote[] {
+    const remainingQuotes = quotes.filter(quote => quote.url !== quoteToDelete.url);
+    localStorage.setItem(LOCAL_STORAGE_URL_KEY, JSON.stringify(remainingQuotes.map(quote => quote.url)));
+    return remainingQuotes;
   }
 
   getLocalStorageUrls(): string[] {
     const storedData = localStorage.getItem(LOCAL_STORAGE_URL_KEY) || "[]";
     return JSON.parse(storedData);
-  }
-
-  parseSymbol(url: string){
-    return url.replace(/^.*\?symbol=([^&]{1,}).*$/, "$1") || "Unable to parse symbol";
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Quote } from 'src/app/interfaces/Quote';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,11 +9,14 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 })
 export class QuoteItemComponent implements OnInit {
   @Input() quote: Quote | undefined;
+  @Output() onDeleteQuote: EventEmitter<Quote> = new EventEmitter()
   faTimes = faTimes;
 
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
+  onDelete(quote: Quote){
+    this.onDeleteQuote.emit(quote);
+  }
 }

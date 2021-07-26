@@ -1,1 +1,1 @@
-<app-quote-item *ngFor="let quote of quotes" [quote]="quote"></app-quote-item>
+<app-quote-item *ngFor="let quote of quotes" [quote]="quote" (onDeleteQuote)="deleteQuote(quote)"></app-quote-item>
