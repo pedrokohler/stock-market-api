@@ -1,2 +1,15 @@
 <app-add-quote (onAddQuote)="addQuote($event)"></app-add-quote>
-<app-quote-item *ngFor="let quote of quotes" [quote]="quote" (onDeleteQuote)="deleteQuote(quote)"></app-quote-item>
+<div>
+  <table>
+      <tr>
+        <th>Symbol</th>
+        <th>Timestamp</th>
+        <th>Opening Price</th>
+        <th>Last Price</th>
+        <th>Current Price</th>
+        <th>Change Percentage</th>
+        <th>Actions</th>
+      </tr>
+      <tr app-quote-item *ngFor="let quote of quotes" [quote]="quote" (onDeleteQuote)="deleteQuote(quote)"></tr>
+  </table>
+</div>

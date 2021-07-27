@@ -1,7 +1,7 @@
-<div *ngIf="quote">
-  <h3>
-    {{quote.symbol}}
-    <fa-icon (click)="onDelete()" [ngStyle]="{'color': 'red'}" [icon]="faTimes"></fa-icon>
-  </h3>
-  <p>{{quote.currentPrice}}</p>
-</div>
+<td>{{quote.symbol}}</td>
+<td>{{quote.pollingTimestamp}}</td>
+<td>{{quote.openPrice}}</td>
+<td>{{quote.lastPrice}}</td>
+<td>{{quote.currentPrice}}</td>
+<td>{{quote.changePercentage}}</td>
+<td><fa-icon (click)="onDelete()" [ngStyle]="{'color': 'red'}" [icon]="faTimes"></fa-icon></td>

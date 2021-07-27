@@ -5,7 +5,7 @@ import { ProcessedQuote, processedQuoteInitialValues } from 'src/app/interfaces/
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-quote-item',
+  selector: 'tr[app-quote-item]',
   templateUrl: './quote-item.component.html',
   styleUrls: ['./quote-item.component.css']
 })
