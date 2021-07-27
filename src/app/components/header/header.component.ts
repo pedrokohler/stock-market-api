@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { UiService } from 'src/app/services/ui.service';
 
 @Component({
   selector: 'app-header',
@@ -7,14 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   title: string = 'Stock Market Api';
+  showChangeSettings: boolean = false;
+  subscription: Subscription = new Subscription();
 
-  constructor() { }
+  constructor(private uiService: UiService) { }
 
   ngOnInit(): void {
+    this.subscription = this.uiService.onToggle().subscribe(value => this.showChangeSettings = value);
   }
 
-  doSomething() {
-    console.log("I did something.");
+  handleOnButtonClick() {
+    this.uiService.toggleShowAddSettings();
   }
 
 }

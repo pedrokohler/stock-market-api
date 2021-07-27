@@ -1,0 +1,17 @@
+<div *ngIf="isVisible">
+  <form (ngSubmit)="onSubmit()">
+  <div>
+    <label for="changePercentageThreshold">Change Percentage Threshold</label>
+    <input type="number" name="changePercentageThreshold" placeholder="Set the change percentage threshold" [(ngModel)]="changePercentageThreshold">
+  </div>
+  <div>
+    <label for="highFrequencyPollingInterval">High Frequency Polling Interval</label>
+    <input type="number" name="highFrequencyPollingInterval" placeholder="Set the high frequency polling interval" [(ngModel)]="highFrequencyPollingInterval">
+  </div>
+  <div>
+    <label for="lowFrequencyPollingInterval">Low Frequency Polling Interval</label>
+    <input type="number" name="lowFrequencyPollingInterval" placeholder="Set the low frequency polling interval" [(ngModel)]="lowFrequencyPollingInterval">
+  </div>
+  <input type="submit" value="Save Settings">
+</form>
+</div>

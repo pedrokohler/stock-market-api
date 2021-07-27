@@ -18,6 +18,7 @@ export class QuoteItemComponent implements OnInit, OnDestroy{
   constructor(private quoteService: QuoteService) {}
 
   ngOnInit(): void {
+    this.quoteService.onSettingsChanged().subscribe(_ => this.resetTriggers())
     this.triggerNextPolling();
   }
 
@@ -26,18 +27,21 @@ export class QuoteItemComponent implements OnInit, OnDestroy{
   }
 
   triggerNextPolling(){
-    console.log('triggerNextPolling');
     this.timerSubscription = timer(this.quote.pollingInterval).subscribe(_ => this.updateQuote.bind(this)());
   }
 
   updateQuote() {
-    console.log('updateQuote');
     const observable =  this.quoteService.updateQuote(this.quote);
     observable.subscribe(quote => {
       this.quote = quote;
       this.triggerNextPolling();
     });
     return observable;
+  }
+
+  resetTriggers() {
+    this.timerSubscription.unsubscribe();
+    this.updateQuote();
   }
 
   onDelete(){

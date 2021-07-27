@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { Observable, forkJoin, of } from 'rxjs';
+import { Observable, forkJoin, of, Subject } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { parseSymbol } from "src/app/common/parseSymbol";
 import { quoteAdapter } from 'src/app/adapters/quote.adapter';
@@ -14,9 +14,11 @@ import { Quote } from '../interfaces/Quote.interface';
   providedIn: 'root'
 })
 export class QuoteService {
-  static highFrequencyPollingInterval: number = 2000;
-  static lowFrequencyPollingInterval: number = 15000;
-  static changePercentageThreshold: number = 3;
+  public highFrequencyPollingInterval: number = 2 * 1000;
+  public lowFrequencyPollingInterval: number = 500 * 1000;
+  public changePercentageThreshold: number = 3;
+  private subject: Subject<null> = new Subject<null>();
+
   constructor(private http: HttpClient, private storageService: LocalStorageService) { }
 
   initializeQuotes(urls: string[]): Observable<ProcessedQuote[]> {
@@ -50,9 +52,9 @@ export class QuoteService {
   }
 
   calculatePollingInterval(changePercentage: number): number {
-    return changePercentage > QuoteService.changePercentageThreshold
-      ? QuoteService.highFrequencyPollingInterval
-      : QuoteService.lowFrequencyPollingInterval
+    return changePercentage > this.changePercentageThreshold
+      ? this.highFrequencyPollingInterval
+      : this.lowFrequencyPollingInterval
   }
 
   fetchQuote(url: string, lastPrice?: number): Observable<ProcessedQuote> {
@@ -84,5 +86,20 @@ export class QuoteService {
       pollingInterval,
       changePercentage: 1,
     }
+  }
+
+  configure( data: {
+    highFrequencyPollingInterval: number,
+    lowFrequencyPollingInterval: number,
+    changePercentageThreshold: number,
+  }): void{
+    this.highFrequencyPollingInterval = data.highFrequencyPollingInterval,
+    this.lowFrequencyPollingInterval = data.lowFrequencyPollingInterval,
+    this.changePercentageThreshold = data.changePercentageThreshold,
+    this.subject.next(null);
+  }
+
+  onSettingsChanged(): Observable<any> {
+    return this.subject.asObservable();
   }
 }

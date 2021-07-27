@@ -8,7 +8,7 @@ export interface ProcessedQuote extends Quote {
   changePercentage: number,
 }
 
-export const processedQuoteInitialValues: ProcessedQuote= {
+export const processedQuoteInitialValues: ProcessedQuote = {
   ...quoteInitialValues,
   url: "",
   symbol: "",

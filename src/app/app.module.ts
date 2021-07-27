@@ -10,6 +10,7 @@ import { ButtonComponent } from './components/button/button.component';
 import { QuotesComponent } from './components/quotes/quotes.component';
 import { QuoteItemComponent } from './components/quote-item/quote-item.component';
 import { AddQuoteComponent } from './components/add-quote/add-quote.component';
+import { SettingsFormComponent } from './components/settings-form/settings-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AddQuoteComponent } from './components/add-quote/add-quote.component';
     ButtonComponent,
     QuotesComponent,
     QuoteItemComponent,
-    AddQuoteComponent
+    AddQuoteComponent,
+    SettingsFormComponent
   ],
   imports: [
     BrowserModule,
