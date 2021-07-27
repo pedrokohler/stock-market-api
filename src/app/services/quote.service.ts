@@ -104,7 +104,7 @@ export class QuoteService {
       symbol: parseSymbol(url),
       lastPrice: lastPriceConsidered,
       pollingInterval,
-      changePercentage: 1,
+      changePercentage,
     }
   }
 
