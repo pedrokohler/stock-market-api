@@ -16,7 +16,6 @@ export class QuotesComponent implements OnInit {
 
   ngOnInit(): void {
     this.initialUrls = this.storageService.getStoredUrls();
-    this.quoteService.initializeSettings();
     this.quoteService.initializeQuotes(this.initialUrls).subscribe(quotes => this.quotes = quotes);
   }
 

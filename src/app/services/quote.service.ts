@@ -41,9 +41,9 @@ export class QuoteService {
       changePercentageThreshold,
     } = this.storageService.getStoredSettings();
 
-    this.highFrequencyPollingInterval = highFrequencyPollingInterval || INITIAL_HIGH_FREQUENCY_POLLING_INTERVAL;
-    this.lowFrequencyPollingInterval = lowFrequencyPollingInterval || INITIAL_LOW_FREQUENCY_POLLING_INTERVAL;
-    this.changePercentageThreshold = changePercentageThreshold || INITIAL_CHANGE_PERCENTAGE_THRESHOLD;
+    this.highFrequencyPollingInterval = Number(highFrequencyPollingInterval) || INITIAL_HIGH_FREQUENCY_POLLING_INTERVAL;
+    this.lowFrequencyPollingInterval = Number(lowFrequencyPollingInterval) || INITIAL_LOW_FREQUENCY_POLLING_INTERVAL;
+    this.changePercentageThreshold = Number(changePercentageThreshold) || INITIAL_CHANGE_PERCENTAGE_THRESHOLD;
   }
 
   deleteQuote(quotes: ProcessedQuote[], quoteToDelete: ProcessedQuote): ProcessedQuote[] {

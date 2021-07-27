@@ -18,6 +18,7 @@ export class SettingsFormComponent implements OnInit {
   constructor(private uiService: UiService, private quoteService: QuoteService) { }
 
   ngOnInit(): void {
+    this.quoteService.initializeSettings();
     this.highFrequencyPollingInterval = this.quoteService.highFrequencyPollingInterval / 1000;
     this.lowFrequencyPollingInterval = this.quoteService.lowFrequencyPollingInterval / 1000;
     this.changePercentageThreshold = this.quoteService.changePercentageThreshold;
