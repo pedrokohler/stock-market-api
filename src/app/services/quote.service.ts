@@ -62,13 +62,11 @@ export class QuoteService {
       this.storageService.addUrl(url);
       return newQuotes;
     }
-    const oldQuotes = of(quotes);
-    return oldQuotes;
+    return of(quotes);
   }
 
-  updateQuote(quote: ProcessedQuote): Observable<ProcessedQuote> {
-    const newQuote = this.fetchQuote(quote.url, quote.currentPrice);
-    return newQuote;
+  refreshQuote(quote: ProcessedQuote): Observable<ProcessedQuote> {
+    return this.fetchQuote(quote.url, quote.currentPrice);
   }
 
   calculatePollingInterval(changePercentage: number): number {

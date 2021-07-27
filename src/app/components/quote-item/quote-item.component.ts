@@ -31,7 +31,7 @@ export class QuoteItemComponent implements OnInit, OnDestroy{
   }
 
   updateQuote() {
-    const observable =  this.quoteService.updateQuote(this.quote);
+    const observable =  this.quoteService.refreshQuote(this.quote);
     observable.subscribe(quote => {
       this.quote = quote;
       this.triggerNextPolling();
