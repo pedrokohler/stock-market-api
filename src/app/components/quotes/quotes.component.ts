@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Quote } from 'src/app/interfaces/Quote';
+import { Quote } from 'src/app/interfaces/Quote.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { QuoteService } from 'src/app/services/quote.service';
 

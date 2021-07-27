@@ -7,5 +7,5 @@ export interface Quote {
   currentPrice: number;
   previousClosePrice: number;
   pollingTimestamp: number;
-  parseSymbol: (url: string) => string;
+  lastPrice: number;
 }

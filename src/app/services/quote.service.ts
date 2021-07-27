@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable, forkJoin, of } from 'rxjs';
 import { map } from 'rxjs/operators'
-import { QuoteAdapter } from 'src/app/adapters/quote.adapter';
-import { Quote } from 'src/app/interfaces/Quote';
-import { QuoteResponse } from '../interfaces/QuoteResponse.dto';
+import { quoteAdapter } from 'src/app/adapters/quote.adapter';
+import { Quote } from 'src/app/interfaces/Quote.interface';
+import { QuoteResponse } from '../dtos/QuoteResponse.dto';
 import { LocalStorageService } from './local-storage.service';
 
 
@@ -39,11 +39,11 @@ export class QuoteService {
     return oldQuotes;
   }
 
-  fetchQuote(url: string): Observable<Quote> {
+  fetchQuote(url: string, lastPrice?: number): Observable<Quote> {
     return this.http
       .get<QuoteResponse>(url)
       .pipe(
-        map((response) => new QuoteAdapter(url, response))
+        map((quoteResponse) => quoteAdapter({ url, quoteResponse, lastPrice }))
       );
   }
 }

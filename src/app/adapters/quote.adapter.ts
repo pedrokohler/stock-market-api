@@ -1,30 +1,29 @@
-import { Quote } from "../interfaces/Quote";
-import { QuoteResponse } from "../interfaces/QuoteResponse.dto";
+import { Quote } from "../interfaces/Quote.interface";
+import { parseSymbol } from "src/app/common/parseSymbol";
+import { QuoteResponse } from "src/app/dtos/QuoteResponse.dto";
 
-export class QuoteAdapter implements Quote {
-  public url: string;
-  public symbol: string;
-  public openPrice: number;
-  public highPrice: number;
-  public lowPrice: number;
-  public currentPrice: number;
-  public previousClosePrice: number;
-  public pollingTimestamp: number;
-  static matchSymbolRegex = /^.*\?symbol=([^&]{1,}).*$/;
+interface QuoteAdapterInput {
+  url: string;
+  quoteResponse: QuoteResponse;
+  lastPrice?: number;
 
-  constructor(url: string, quoteResponse: QuoteResponse){
-    const { o, h, l, c, pc, t } = quoteResponse;
-    this.url = url,
-    this.symbol = this.parseSymbol(url);
-    this.openPrice = o;
-    this.highPrice = h;
-    this.lowPrice = l;
-    this.currentPrice = c;
-    this.previousClosePrice = pc;
-    this.pollingTimestamp = t;
-  }
+}
 
-  public parseSymbol(url: string): string{
-    return url.replace(QuoteAdapter.matchSymbolRegex, "$1") || "Unable to parse symbol";
+export function quoteAdapter ({
+  url,
+  quoteResponse,
+  lastPrice
+}: QuoteAdapterInput): Quote {
+  const { o, h, l, c, pc, t } = quoteResponse;
+  return {
+    url: url,
+    symbol: parseSymbol(url),
+    openPrice: o,
+    highPrice: h,
+    lowPrice: l,
+    currentPrice: c,
+    previousClosePrice: pc,
+    pollingTimestamp: t,
+    lastPrice: lastPrice || c,
   }
 }

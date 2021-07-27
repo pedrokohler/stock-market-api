@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { matchSymbolRegex } from 'src/app/common/parseSymbol';
 import { isUri } from 'valid-url';
-import { QuoteAdapter } from 'src/app/adapters/quote.adapter';
 
 @Component({
   selector: 'app-add-quote',
@@ -26,7 +26,7 @@ export class AddQuoteComponent implements OnInit {
   }
 
   isValidUrl(url: string){
-    const hasSymbolMatch = QuoteAdapter.matchSymbolRegex.test(url);
+    const hasSymbolMatch = matchSymbolRegex.test(url);
     return isUri(url) && hasSymbolMatch;
   }
 }

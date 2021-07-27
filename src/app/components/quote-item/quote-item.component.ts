@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Quote } from 'src/app/interfaces/Quote';
+import { Quote } from 'src/app/interfaces/Quote.interface';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
