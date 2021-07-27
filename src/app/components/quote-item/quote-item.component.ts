@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { timer } from 'rxjs';
 import { QuoteService } from 'src/app/services/quote.service';
-import { Quote, quoteInitialValues } from 'src/app/interfaces/Quote.interface';
+import { ProcessedQuote, processedQuoteInitialValues } from 'src/app/interfaces/ProcessedQuote.interface';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,9 +9,9 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './quote-item.component.html',
   styleUrls: ['./quote-item.component.css']
 })
-export class QuoteItemComponent implements OnInit {
-  @Input() quote: Quote = quoteInitialValues;
-  @Output() onDeleteQuote: EventEmitter<Quote> = new EventEmitter();
+export class QuoteItemComponent implements OnInit{
+  @Input() quote: ProcessedQuote = processedQuoteInitialValues;
+  @Output() onDeleteQuote: EventEmitter<ProcessedQuote> = new EventEmitter();
   faTimes = faTimes;
 
   constructor(private quoteService: QuoteService) {}
@@ -21,7 +21,7 @@ export class QuoteItemComponent implements OnInit {
   }
 
   triggerNextPolling(){
-    return timer(this.quote.pollingInterval).subscribe(_ => this.updateQuote.bind(this)())
+    return timer(this.quote.pollingInterval).subscribe(_ => this.updateQuote.bind(this)());
   }
 
   updateQuote() {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Quote } from 'src/app/interfaces/Quote.interface';
+import { ProcessedQuote } from 'src/app/interfaces/ProcessedQuote.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { QuoteService } from 'src/app/services/quote.service';
 
@@ -10,7 +10,7 @@ import { QuoteService } from 'src/app/services/quote.service';
 })
 export class QuotesComponent implements OnInit {
   initialUrls: string[] = [];
-  quotes: Quote[] = [];
+  quotes: ProcessedQuote[] = [];
 
   constructor(private quoteService: QuoteService, private storageService: LocalStorageService) { }
 
@@ -19,7 +19,7 @@ export class QuotesComponent implements OnInit {
     this.quoteService.initializeQuotes(this.initialUrls).subscribe(quotes => this.quotes = quotes);
   }
 
-  deleteQuote(quote: Quote){
+  deleteQuote(quote: ProcessedQuote){
     this.quotes = this.quoteService.deleteQuote(this.quotes, quote);
   }
 
