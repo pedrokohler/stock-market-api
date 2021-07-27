@@ -9,14 +9,22 @@ import { QuoteResponse } from 'src/app/dtos/QuoteResponse.dto';
 import { LocalStorageService } from './local-storage.service';
 import { Quote } from 'src/app/interfaces/Quote.interface';
 
+export interface Settings {
+    highFrequencyPollingInterval: number,
+    lowFrequencyPollingInterval: number,
+    changePercentageThreshold: number,
+}
 
+const INITIAL_HIGH_FREQUENCY_POLLING_INTERVAL = 2 * 1000;
+const INITIAL_LOW_FREQUENCY_POLLING_INTERVAL = 15 * 1000;
+const INITIAL_CHANGE_PERCENTAGE_THRESHOLD = 3;
 @Injectable({
   providedIn: 'root'
 })
 export class QuoteService {
-  public highFrequencyPollingInterval: number = 2 * 1000;
-  public lowFrequencyPollingInterval: number = 500 * 1000;
-  public changePercentageThreshold: number = 3;
+  public highFrequencyPollingInterval: number = INITIAL_HIGH_FREQUENCY_POLLING_INTERVAL;
+  public lowFrequencyPollingInterval: number = INITIAL_LOW_FREQUENCY_POLLING_INTERVAL;
+  public changePercentageThreshold: number = INITIAL_CHANGE_PERCENTAGE_THRESHOLD;
   private subject: Subject<null> = new Subject<null>();
 
   constructor(private http: HttpClient, private storageService: LocalStorageService) { }
@@ -24,6 +32,18 @@ export class QuoteService {
   initializeQuotes(urls: string[]): Observable<ProcessedQuote[]> {
     const quotes = urls.map(url => this.fetchQuote.bind(this)(url));
     return forkJoin(quotes);
+  }
+
+  initializeSettings(){
+    const {
+      highFrequencyPollingInterval,
+      lowFrequencyPollingInterval,
+      changePercentageThreshold,
+    } = this.storageService.getStoredSettings();
+
+    this.highFrequencyPollingInterval = highFrequencyPollingInterval || INITIAL_HIGH_FREQUENCY_POLLING_INTERVAL;
+    this.lowFrequencyPollingInterval = lowFrequencyPollingInterval || INITIAL_LOW_FREQUENCY_POLLING_INTERVAL;
+    this.changePercentageThreshold = changePercentageThreshold || INITIAL_CHANGE_PERCENTAGE_THRESHOLD;
   }
 
   deleteQuote(quotes: ProcessedQuote[], quoteToDelete: ProcessedQuote): ProcessedQuote[] {
@@ -88,14 +108,11 @@ export class QuoteService {
     }
   }
 
-  configure( data: {
-    highFrequencyPollingInterval: number,
-    lowFrequencyPollingInterval: number,
-    changePercentageThreshold: number,
-  }): void{
+  configure(data: Settings): void{
     this.highFrequencyPollingInterval = data.highFrequencyPollingInterval,
     this.lowFrequencyPollingInterval = data.lowFrequencyPollingInterval,
     this.changePercentageThreshold = data.changePercentageThreshold,
+    this.storageService.setStoredSettings(data)
     this.subject.next(null);
   }
 
