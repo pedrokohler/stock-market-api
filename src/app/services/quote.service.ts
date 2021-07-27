@@ -12,10 +12,13 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root'
 })
 export class QuoteService {
+  static highFrequencyPollingInterval: number = 2000;
+  static lowFrequencyPollingInterval: number = 15000;
+  static changePercentageThreshold: number = 3;
   constructor(private http: HttpClient, private storageService: LocalStorageService) { }
 
   initializeQuotes(urls: string[]): Observable<Quote[]> {
-    const quotes = urls.map(this.fetchQuote.bind(this));
+    const quotes = urls.map(url => this.fetchQuote.bind(this)(url));
     return forkJoin(quotes);
   }
 
@@ -39,11 +42,32 @@ export class QuoteService {
     return oldQuotes;
   }
 
+  updateQuote(quote: Quote): Observable<Quote> {
+    const newQuote = this.fetchQuote(quote.url, quote.currentPrice);
+    return newQuote;
+  }
+
+  calculatePollingInterval(currentPrice: number, lastPrice: number): number {
+    const changePercentage = (Math.abs(lastPrice - currentPrice) / lastPrice) * 100;
+    return changePercentage > QuoteService.changePercentageThreshold
+      ? QuoteService.highFrequencyPollingInterval
+      : QuoteService.lowFrequencyPollingInterval
+  }
+
   fetchQuote(url: string, lastPrice?: number): Observable<Quote> {
     return this.http
       .get<QuoteResponse>(url)
       .pipe(
-        map((quoteResponse) => quoteAdapter({ url, quoteResponse, lastPrice }))
+        map(this.normalizeQuote(url, lastPrice))
       );
+  }
+
+  normalizeQuote(url: string, lastPrice?: number) {
+    return (quoteResponse: QuoteResponse) => {
+      const currentPrice = quoteResponse.c;
+      const lastPriceConsidered = lastPrice || quoteResponse.c;
+      const pollingInterval = this.calculatePollingInterval(currentPrice, lastPriceConsidered);
+      return quoteAdapter({ url, quoteResponse, lastPrice, pollingInterval });
+    }
   }
 }

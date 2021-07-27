@@ -5,14 +5,15 @@ import { QuoteResponse } from "src/app/dtos/QuoteResponse.dto";
 interface QuoteAdapterInput {
   url: string;
   quoteResponse: QuoteResponse;
+  pollingInterval: number;
   lastPrice?: number;
-
 }
 
 export function quoteAdapter ({
   url,
   quoteResponse,
-  lastPrice
+  pollingInterval,
+  lastPrice,
 }: QuoteAdapterInput): Quote {
   const { o, h, l, c, pc, t } = quoteResponse;
   return {
@@ -25,5 +26,6 @@ export function quoteAdapter ({
     previousClosePrice: pc,
     pollingTimestamp: t,
     lastPrice: lastPrice || c,
+    pollingInterval,
   }
 }
