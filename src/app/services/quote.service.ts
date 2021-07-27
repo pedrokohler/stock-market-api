@@ -5,9 +5,9 @@ import { map } from 'rxjs/operators'
 import { parseSymbol } from "src/app/common/parseSymbol";
 import { quoteAdapter } from 'src/app/adapters/quote.adapter';
 import { ProcessedQuote } from 'src/app/interfaces/ProcessedQuote.interface';
-import { QuoteResponse } from '../dtos/QuoteResponse.dto';
+import { QuoteResponse } from 'src/app/dtos/QuoteResponse.dto';
 import { LocalStorageService } from './local-storage.service';
-import { Quote } from '../interfaces/Quote.interface';
+import { Quote } from 'src/app/interfaces/Quote.interface';
 
 
 @Injectable({

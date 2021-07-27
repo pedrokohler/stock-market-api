@@ -1,4 +1,4 @@
-import { Quote } from "../interfaces/Quote.interface";
+import { Quote } from "src/app/interfaces/Quote.interface";
 import { QuoteResponse } from "src/app/dtos/QuoteResponse.dto";
 
 export function quoteAdapter (quoteResponse: QuoteResponse): Quote {
