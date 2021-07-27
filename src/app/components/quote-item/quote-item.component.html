@@ -1,7 +1,7 @@
-<td>{{quote.symbol}}</td>
-<td>{{quote.pollingTimestamp}}</td>
-<td>{{quote.openPrice}}</td>
-<td>{{quote.lastPrice}}</td>
-<td>{{quote.currentPrice}}</td>
-<td>{{quote.changePercentage}}</td>
-<td><fa-icon (click)="onDelete()" [ngStyle]="{'color': 'red'}" [icon]="faTimes"></fa-icon></td>
+<td><span>Symbol:</span>{{quote.symbol}}</td>
+<td><span>Polling Timestamp:</span>{{quote.pollingTimestamp}}</td>
+<td><span>Open Price:</span>{{quote.openPrice}}</td>
+<td><span>Last Price:</span>{{quote.lastPrice}}</td>
+<td><span>Current Price:</span>{{quote.currentPrice}}</td>
+<td><span>Change Percentage:</span>{{quote.changePercentage}}</td>
+<td><span>Delete:</span><fa-icon (click)="onDelete()" [ngStyle]="{'color': 'red'}" [icon]="faTimes"></fa-icon></td>

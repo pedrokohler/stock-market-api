@@ -1,0 +1,37 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+
+div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 1.5em;
+  margin-right: 10px;
+}
+
+input {
+  width: 100%;
+  max-width: 600px;
+  font-size: 1em;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  max-width: 200px;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1em;
+}
