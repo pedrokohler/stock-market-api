@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Quote } from 'src/app/interfaces/Quote';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { QuoteService } from 'src/app/services/quote.service';
 
 @Component({
@@ -11,10 +12,10 @@ export class QuotesComponent implements OnInit {
   urls: string[] = [];
   quotes: Quote[] = [];
 
-  constructor(private quoteService: QuoteService) { }
+  constructor(private quoteService: QuoteService, private storageService: LocalStorageService) { }
 
   ngOnInit(): void {
-    this.urls = this.quoteService.getLocalStorageUrls();
+    this.urls = this.storageService.getStoredUrls();
     this.quoteService.initializeQuotes(this.urls).subscribe(quotes => this.quotes = quotes);
   }
 
