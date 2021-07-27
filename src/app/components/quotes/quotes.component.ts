@@ -21,4 +21,8 @@ export class QuotesComponent implements OnInit {
   deleteQuote(quote: Quote){
     this.quotes = this.quoteService.deleteQuote(this.quotes, quote);
   }
+
+  addQuote(url: string) {
+    this.quoteService.addQuote(this.quotes, url).subscribe(quotes => this.quotes = quotes);
+  }
 }

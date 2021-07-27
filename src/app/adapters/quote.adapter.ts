@@ -10,6 +10,7 @@ export class QuoteAdapter implements Quote {
   public currentPrice: number;
   public previousClosePrice: number;
   public pollingTimestamp: number;
+  static matchSymbolRegex = /^.*\?symbol=([^&]{1,}).*$/;
 
   constructor(url: string, quoteResponse: QuoteResponse){
     const { o, h, l, c, pc, t } = quoteResponse;
@@ -24,6 +25,6 @@ export class QuoteAdapter implements Quote {
   }
 
   public parseSymbol(url: string): string{
-    return url.replace(/^.*\?symbol=([^&]{1,}).*$/, "$1") || "Unable to parse symbol";
+    return url.replace(QuoteAdapter.matchSymbolRegex, "$1") || "Unable to parse symbol";
   }
 }
